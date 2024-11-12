@@ -1,25 +1,23 @@
 
-![](examples/2.jpg)
-> *status*: currently stable, writing documentation
-
-
 # drmon
 monitor and failsafe automation for your draconic reactor
 
+![](examples/displayExample.png)
+![](examples/setupExample.png)
+
 ### what is this
 this is a computercraft LUA script that monitors everything about a draconic reactor, with a couple features to help keep it from exploding
-NB: This is for Minecraft 1.7.10. You will need to edit references within the code for any version higher to reflect any changes made to Draconic Evolution past its 1.7.10 release.
+NB: This is for Minecraft 1.20.1, specifically tested for ATM9. Any changes in versions before or after the 0.3.2 ATM9 launch might need changes in the code.
 
 
-### tutorial
+### tutorial -- OUTDATED
 you can find a very well made youtube tutorial on how to set this up [here](https://www.youtube.com/watch?v=8rBhQP1xqEU) , thank you [The MindCrafters](https://www.youtube.com/channel/UCf2wEy4_BbYpAQcgvN26OaQ)
 
 ### features
 * uses a 3x3 advanced computer touchscreen monitor to interact with your reactor
 * automated regulation of the input gate for the targeted field strength of 50%
   * adjustable
-* immediate shutdown and charge upon your field strength going below 20%
-  * adjustable
+* immediate shutdown and charge upon your field strength going below a customisable amount
   * reactor will activate upon a successful charge
 * immediate shutdown when your temperature goes above 8000C
   * adjustable
@@ -33,24 +31,26 @@ you can find a very well made youtube tutorial on how to set this up [here](http
 * one fully setup draconic reactor with fuel
 * 1 advanced computer
 * 9 advanced monitors
-* 3 wired modems, wireless will not work
+* 3-4 wired modems, wireless will not work
 * a bunch of network cable
 
 ### installation
-* your reactor output flux gate must be setup so that one side of it and one of your stabilizers touches a side of the advanced computer
-* by default, flux gate should touch the right side, stabilizer should touch the back of the computer
-  * if you want to use different sides you need to modify `startup` after you have installed this and specify the sides
-* connect a modem to your input flux gate (the one connected to your reactor energy injector)
-* connect a modem to your advanced computer
-* setup yoru monitors to be a 3x3 and connect a modem to anywhere but the front
-* run network cable to all 3 modems
-* install this code via running the install script using these commands :
+* Set up your reactor.
+* Place your advanced computer so that it's back is against a stabilser.
+* Place a modem on your computer.
+* Place a modem on the flux gate where the power will be going OUT from.
+* Place a modem on the flux gate which is feeding your reactor energy injector.
+* Place a modem on your monitor.
+* (You can use a block type modem if you want and connect your OUTput flux gate and your computer that way.)
+* Run network cables from your modems to the modem connected to your computer and make sure you turn them on.
+* When you turn on the modem, the game will put a message into the chat saying the name of the device you connected. Make sure to note these down as you will need them.
+* Install the script using these commands in your advanced computer: 
 
 ```
-> pastebin get Ls1Wg3QQ install
+> pastebin get 3fyy7Uzr install
 > install
 ```
-* modify `startup` if you wish to configure/alter any variables mentioned in the feature list, you'll find them at the top of the file
+* Modify the `startup.lua` file that was created upon running the installation script to fit your setup: set the ```outPutFluxGate``` (line 3) to the name that the game put in the chat when you started the modem on the flux gate that power will be going OUT from. Do the same on line 4 for `inputFluxGate`.
 ```
 > startup
 ```
@@ -64,6 +64,5 @@ you can find a very well made youtube tutorial on how to set this up [here](http
 > install
 > startup
 ```
-
-### known issues
-* there is a problem with **skyfactory 2.5** and **pastebin**, see workarounds [here](https://github.com/acidjazz/drmon/issues/9#issuecomment-277910288)
+# Note
+If you want to fiddle around with screen sizes, you can add a text scaling line under line 32 that searches for your monitor. Scaling 1.5 looks fine on a 5x5 monitor for example.
