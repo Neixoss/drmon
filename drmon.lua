@@ -11,7 +11,7 @@ local lowestFieldPercent = 12
 local activateOnCharged = 1
 
 -- please leave things untouched from here on
-os.loadAPI("lib/f")
+os.loadAPI("lib/f.lua")
 
 local version = "0.3"
 -- toggleable via the monitor, use our algorithm to achieve our target field strength or let the user tweak it
@@ -171,7 +171,7 @@ function update()
     end
 
     for k, v in pairs (ri) do
-      print(k.. ": ".. v)
+      print(k.. ": ".. tostring(v))
     end
     print("Output Gate: ", outputFluxGate.getSignalLowFlow())
     print("Input Gate: ", inputFluxGate.getSignalLowFlow())
@@ -214,7 +214,6 @@ function update()
 
     local satPercent
     satPercent = math.ceil(ri.energySaturation / ri.maxEnergySaturation * 10000)*.01
-
     f.draw_text_lr(mon, 2, 11, 1, "Energy Saturation", satPercent .. "%", colors.white, colors.white, colors.black)
     f.progress_bar(mon, 2, 12, mon.X-2, satPercent, 100, colors.blue, colors.gray)
 
@@ -245,7 +244,12 @@ function update()
     f.progress_bar(mon, 2, 18, mon.X-2, fuelPercent, 100, fuelColor, colors.gray)
 
     f.draw_text_lr(mon, 2, 19, 1, "Action ", action, colors.gray, colors.gray, colors.black)
-
+    -- prints for debug 
+    print("Saturation = ".. satPercent)
+    print("Field ="..fieldPercent)
+    print("Reactor Status = ".. ri.status)
+    print("IsActivateOnCharged? = ".. activateOnCharged)
+    print("Temperature = ".. ri.temperature)
     -- actual reactor interaction
     --
     if emergencyCharge == true then
@@ -265,7 +269,7 @@ function update()
     end
 
     -- are we charged? lets activate
-    local activate = ri.status == "warming_up" and activateOnCharged == 1 and fieldPercent >= 50 and satPercent >=50 and ri.temperature >= 2000 and ri.temperature <= 2005 
+    local activate = ri.status == "warming_up" and activateOnCharged == 1 and fieldPercent >= 50 and satPercent >=50 and ri.temperature >= 2000 and ri.temperature <= 2007 
     if activate then
       reactor.activateReactor()
     end
@@ -311,4 +315,3 @@ function update()
 end
 
 parallel.waitForAny(buttons, update)
-
